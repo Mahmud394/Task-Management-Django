@@ -77,4 +77,5 @@ def view_task(request):
     # Fetch the first task
     # first_task = Task.objects.first()
     
+    
     return  render(request, "show_task.html",{"tasks": tasks,"task3": task_3, "first_task": first_task})
