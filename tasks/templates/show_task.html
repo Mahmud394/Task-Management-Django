@@ -8,19 +8,39 @@
 <body>
     <div>
       
-        <ul>
+        {% comment %} <ol>
             {% for task in tasks %}
-              <li>{{task.status}}</li>
+              <li>
+                 <p>{{task.task.title}}</p> 
+                <samp>{{task.priority}}</samp> 
+
+               <p>{{task.title}}</p>
+                <samp>{{task.details.priority}}</samp> 
+
+                <p>{{task.title}}</p>
+                {% for emplooye in task.assigned_to.all %}
+                  <p>{{emplooye.name}}</p>
+                {% endfor %}
+                
+              </li>
             {% endfor %}
-        </ul> 
+        </ol>  {% endcomment %}
+
+        {% comment %} <p>{{task_count}}</p> {% endcomment %}
+         <ol>
+
+          {% for project in projects %}
+            <li>
+              <p>{{project.name}}</p>
+              <p>{{project.num_task}}</p>
+              
+            </li>
+          {% endfor %}
+        </ol>
+
+
     </div>
 
-    <div>
-        {{task3}}
-    </div>
-
-    <div>
-        {{first_task}}
-    </div>
+   
 </body>
 </html>
