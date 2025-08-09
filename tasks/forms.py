@@ -1,7 +1,8 @@
 from django import forms
-from tasks.models import Task,TaskDetails
+from tasks.models import Task, TaskDetail
 
 # Django Form
+
 
 class TaskForm(forms.Form):
     title = forms.CharField(max_length=250, label="Task Title")
@@ -21,8 +22,6 @@ class TaskForm(forms.Form):
 
 class StyledFormMixin:
     """ Mixing to apply style to form field"""
-    
-    """ Widget using mixins """
 
     def __init__(self, *arg, **kwarg):
         super().__init__(*arg, **kwarg)
@@ -39,7 +38,7 @@ class StyledFormMixin:
                 })
             elif isinstance(field.widget, forms.Textarea):
                 field.widget.attrs.update({
-                    'class': f"{self.default_classes} ",
+                    'class': f"{self.default_classes} resize-none",
                     'placeholder':  f"Enter {field.label.lower()}",
                     'rows': 5
                 })
@@ -67,36 +66,13 @@ class TaskModelForm(StyledFormMixin, forms.ModelForm):
     class Meta:
         model = Task
         fields = ['title', 'description', 'due_date', 'assigned_to']
-        # exclude = ['project','is_completed','created_at','updated_at']
-   
-        """Manual Widgee"""
-        # widgets = {
-        #     'title': forms.TextInput(attrs={
-        #         'class':"border-2 border-gray-300 w-full rounded-lg shadow-sm focus:border-rose-500 focus:ring-rose-500",
-        #         'placeholder': "Enter task Title"
-        #     }),   
-        #     'description': forms.Textarea(attrs={
-        #         'class':"border-2 border-gray-300 w-full rounded-lg shadow-sm focus:border-rose-500 focus:ring-rose-500",
-        #         'placeholder': "Describe the task"
-        #     }),
-        #     'due_date':forms.SelectDateWidget(attrs={
-        #         'class':"border-2 border-gray-300 rounded-lg shadow-sm focus:border-rose-500 focus:ring-rose-500",
-                
-        #     }),
-        #     'assigned_to':forms.CheckboxSelectMultiple(attrs={
-        #         'class':"border-2 border-gray-300 w-full rounded-lg shadow-sm focus:border-rose-500 focus:ring-rose-500",
-        #     })
-        # }
         widgets = {
             'due_date': forms.SelectDateWidget,
             'assigned_to': forms.CheckboxSelectMultiple
         }
 
-    
-        
+
 class TaskDetailModelForm(StyledFormMixin, forms.ModelForm):
     class Meta:
-        model = TaskDetails
-        fields = ['priority', 'notes']
-
-   
+        model = TaskDetail
+        fields = ['priority', 'notes', 'asset']

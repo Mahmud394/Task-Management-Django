@@ -1,53 +1,30 @@
-from django.db.models.signals import post_save, pre_save, post_delete, pre_delete, m2m_changed
+from django.db.models.signals import post_save, pre_save, m2m_changed, post_delete
 from django.dispatch import receiver
 from django.core.mail import send_mail
 from tasks.models import Task
 
 
+@receiver(m2m_changed, sender=Task.assigned_to.through)
+def notify_employees_on_task_creation(sender, instance, action, **kwargs):
+    if action == 'post_add':
+        print(instance, instance.assigned_to.all())
 
-# signals
+        assigned_emails = [emp.email for emp in instance.assigned_to.all()]
+        print("Checking....", assigned_emails)
 
-# @receiver(post_save, sender=Task) # post_save
-# def notify_task_creation(sender, instance, created, **kawrgs):
-#     print('sender', sender)
-#     print('instance', instance)
-#     print(kawrgs)
-#     print(created)
-#     if created:
-#         instance.is_completed = True
-#         instance.save()
-
-
-# @receiver(pre_save, sender=Task) # pre_save
-# def notify_task_creation(sender, instance, **kawrgs):
-#     print('sender', sender)
-#     print('instance', instance)
-#     print(kawrgs)
-    
-#     instance.is_completed = True
-
-
-
-@receiver(m2m_changed, sender=Task.assigned_to.through) # many to many
-def notify_task_creation(sender, instance, action, **kawrgs):
-    if action =='post_add':
-        assigned_emails = [ emp.email for emp in instance.assigned_to.all()]
-        
         send_mail(
             "New Task Assigned",
-            f"You have been assigned to the task: {instance.title}.",
-            "unmahmud@gmail.com",
+            f"You have been assigned to the task: {instance.title}",
+            "slashupdates@gmail.com",
             assigned_emails,
             fail_silently=False,
         )
-        
-@receiver(post_delete, sender=Task) # post_delete
-def delete_associated_details(sender, instance, **kawrgs):
+
+
+@receiver(post_delete, sender=Task)
+def delete_associate_details(sender, instance, **kwargs):
     if instance.details:
-        print('instance', instance)
+        print(isinstance)
         instance.details.delete()
-        
-        print("deleted successfully")
-   
-    
-    
+
+        print("Deleted successfully")

@@ -8,46 +8,21 @@
     <link rel="stylesheet" href="{% static 'css/output.css' %}">
 </head>
 <body>
-	{% comment %} GET in Django{% endcomment %}
-    {% comment %} 
-     <form method="GET">
-        <label for=""Title></label>
-        <input type="text" name="Title">
-        <label for="">Number</label>
-        <input type="number" name="number">
-        <button type="submit">submit</button>
-    </form>
-    {% endcomment %}
-
-    {% comment %} POST Method  {% endcomment %}
-    {% comment %} 
-     <form  method="POST">
-        {% csrf_token %}
-        <label for=""Title></label>
-        <input type="text" name="Title">
-        <label for="">Number</label>
-        <input type="number" name="number">
-        <button type="submit">submit</button>
-    </form> 
-    {% endcomment %}
     <div class="w-1/2 mx-auto mt-8">
         <div>
             {% if messages %}
-               {% for message in messages %}
-               <div class="px-2 py-1 {% if message.tags == 'success' %}bg-green-500{% endif %}">
-                {{message}}
-               </div>
-               {% endfor %}
+                {% for message in messages %}
+                    <div class="px-2 py-1 {% if message.tags == 'success' %}bg-green-500{% endif %} ">{{message}}</div>
+                {% endfor %}
             {% endif %}
         </div>
-        <form method="POST">
+        <form method="POST" enctype='multipart/form-data'>
             
             {% csrf_token %}
-            {{ task_form.as_p }}
-            {{ task_detail_form.as_p }}
-            <button type="submit" class="bg-rose-600 px-3 py-2 text-white mt-2 rounded-md">Submit</button>
+            {{ task_form }}
+            {{ task_detail_form }}
+            <button type="submit" class="mb-5 bg-rose-600 px-3 py-2 text-white mt-2 rounded-md">Submit</button>
         </form>
     </div>
 </body>
 </html>
-

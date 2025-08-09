@@ -7,40 +7,15 @@
 </head>
 <body>
     <div>
-      
-        {% comment %} <ol>
-            {% for task in tasks %}
-              <li>
-                 <p>{{task.task.title}}</p> 
-                <samp>{{task.priority}}</samp> 
-
-               <p>{{task.title}}</p>
-                <samp>{{task.details.priority}}</samp> 
-
-                <p>{{task.title}}</p>
-                {% for emplooye in task.assigned_to.all %}
-                  <p>{{emplooye.name}}</p>
-                {% endfor %}
-                
-              </li>
+       <ol>
+            {% for project in projects %}
+                <li>
+                    <p>{{project.name}}</p>
+                    <p>{{project.num_task}}</p>
+                </li>
             {% endfor %}
-        </ol>  {% endcomment %}
-
-        {% comment %} <p>{{task_count}}</p> {% endcomment %}
-         <ol>
-
-          {% for project in projects %}
-            <li>
-              <p>{{project.name}}</p>
-              <p>{{project.num_task}}</p>
-              
-            </li>
-          {% endfor %}
-        </ol>
-
-
+            </ol> 
+            {% comment %} <p>{{task_count}}</p> {% endcomment %}
     </div>
-
-   
 </body>
 </html>
